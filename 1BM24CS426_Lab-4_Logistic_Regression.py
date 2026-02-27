@@ -1,8 +1,4 @@
-# ==========================================
-# Logistic Regression - Employee Retention
-# ==========================================
-
-# 1️⃣ Import Libraries
+##########BINARY CLASSIFICATION###########
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,7 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 
-# 2️⃣ Load Dataset
+
 df = pd.read_csv("HR_comma_sep.csv")
 
 print("First 5 Rows:\n", df.head())
@@ -21,11 +17,8 @@ print("\nDataset Shape:", df.shape)
 print("\nColumns:\n", df.columns)
 
 
-# ==========================================
-# 3️⃣ Exploratory Data Analysis (EDA)
-# ==========================================
 
-# Retention Count
+
 print("\nEmployee Retention Count:\n", df['left'].value_counts())
 
 sns.countplot(x='left', data=df)
@@ -33,9 +26,6 @@ plt.title("Employee Retention (0 = Stayed, 1 = Left)")
 plt.show()
 
 
-# ==========================================
-# 4️⃣ Salary vs Retention (Bar Chart)
-# ==========================================
 
 salary_retention = pd.crosstab(df['salary'], df['left'])
 salary_retention.plot(kind='bar')
@@ -47,11 +37,9 @@ plt.xticks(rotation=0)
 plt.show()
 
 
-# ==========================================
-# 5️⃣ Department vs Retention (Bar Chart)
-# ==========================================
 
-# Some datasets use 'sales' instead of 'Department'
+
+
 if 'Department' in df.columns:
     dept_col = 'Department'
 else:
@@ -67,24 +55,16 @@ plt.xticks(rotation=45)
 plt.show()
 
 
-# ==========================================
-# 6️⃣ Correlation Heatmap (Numeric Only)
-# ==========================================
-
 plt.figure(figsize=(10,6))
 sns.heatmap(df.corr(numeric_only=True), annot=True, cmap="coolwarm")
 plt.title("Correlation Matrix")
 plt.show()
 
 
-# ==========================================
-# 7️⃣ Data Preprocessing
-# ==========================================
 
-# Convert categorical variables into dummy variables
 df = pd.get_dummies(df, columns=['salary', dept_col], drop_first=True)
 
-# Select important features (based on EDA)
+
 X = df[['satisfaction_level',
         'average_montly_hours',
         'promotion_last_5years',
@@ -95,26 +75,16 @@ X = df[['satisfaction_level',
 y = df['left']
 
 
-# ==========================================
-# 8️⃣ Train-Test Split
-# ==========================================
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42
 )
 
 
-# ==========================================
-# 9️⃣ Build Logistic Regression Model
-# ==========================================
-
 model = LogisticRegression(max_iter=1000)
 model.fit(X_train, y_train)
 
 
-# ==========================================
-# 🔟 Predictions & Evaluation
-# ==========================================
 
 y_pred = model.predict(X_test)
 
@@ -137,10 +107,7 @@ plt.title("Confusion Matrix")
 plt.show()
 
 
-# ==========================================
-# Zoo Classification using Logistic Regression (Auto File Detection)
-# ==========================================
-
+##########MULTIPLE CLASSIFICATION ########
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
